@@ -192,139 +192,101 @@
 
                         <!-- FORM SUBMIT CONFIGURATION -->
 
-                        <form id="inquiryForm" action="https://formsubmit.co/programerasu@gmail.com" method="POST">
-                            <!-- EMAIL SUBJECT -->
-                            <input type="hidden" name="_subject" value="New Website Enquiry - CadlaB Consulting & Research">
-
-                            <!-- EMAIL TEMPLATE -->
-                            <input type="hidden" name="_template" value="table">
-
-                            <!-- DISABLE CAPTCHA -->
-                            <input type="hidden" name="_captcha" value="false">
-
-                            <!-- SPAM PROTECTION -->
-                            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-
+                        <!-- FORM SUBMIT CONFIGURATION (WEB3FORMS) -->
+                        <form id="inquiryForm" onsubmit="sendEmail(event)">
 
                             <div class="form-grid">
 
-
                                 <!-- NAME -->
                                 <div class="field">
-
-                                    <label for="name">
-                                        Your Name *
-                                    </label>
-
+                                    <label for="name">Your Name *</label>
                                     <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-
                                 </div>
-
 
                                 <!-- EMAIL -->
                                 <div class="field">
-
-                                    <label for="email">
-                                        Email Address *
-                                    </label>
-
+                                    <label for="email">Email Address *</label>
                                     <input type="email" id="email" name="email" placeholder="name@example.com" required>
-
                                 </div>
-
 
                                 <!-- PHONE -->
                                 <div class="field">
-
-                                    <label for="phone">
-                                        Phone Number *
-                                    </label>
-
+                                    <label for="phone">Phone Number *</label>
                                     <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX" pattern="[0-9+\-\s()]{7,20}" required>
-
                                 </div>
-
 
                                 <!-- SERVICE -->
                                 <div class="field">
-
-                                    <label for="service">
-                                        Area of Interest *
-                                    </label>
-
+                                    <label for="service">Area of Interest *</label>
                                     <select id="service" name="service" required>
-
-                                        <option value="">
-                                            Select a service
-                                        </option>
-
-                                        <option>UAV / Drone Mapping</option>
-
-                                        <option>
-                                            LiDAR / Mobile Laser Scanning
-                                        </option>
-
-                                        <option>
-                                            Architectural Design & BIM
-                                        </option>
-
-                                        <option>
-                                            GIS & Remote Sensing
-                                        </option>
-
-                                        <option>Topographical Survey</option>
-
-                                        <option>Training</option>
-
-                                        <option>SaaS / WebGIS</option>
-
-                                        <option>
-                                            Drone as a Service
-                                        </option>
-
-                                        <option>Other</option>
-
-                                    </select>
-
+                <option value="">Select a service</option>
+                <option>UAV / Drone Mapping</option>
+                <option>LiDAR / Mobile Laser Scanning</option>
+                <option>Architectural Design & BIM</option>
+                <option>GIS & Remote Sensing</option>
+                <option>Topographical Survey</option>
+                <option>Training</option>
+                <option>SaaS / WebGIS</option>
+                <option>Drone as a Service</option>
+                <option>Other</option>
+            </select>
                                 </div>
-
 
                                 <!-- MESSAGE -->
                                 <div class="field full">
-
-                                    <label for="message">
-                                        Project Details *
-                                    </label>
-
+                                    <label for="message">Project Details *</label>
                                     <textarea id="message" name="message" placeholder="Describe your project requirements..." required></textarea>
-
                                 </div>
-
 
                                 <!-- SUBMIT -->
                                 <div class="field full">
-
-                                    <button class="btn gold" type="submit" id="submitBtn">
-
-                                        Send Enquiry ↗
-
-                                    </button>
-
-                                    <p id="formMessage" role="status" aria-live="polite" style="font-size:12px;color:var(--muted);margin-top:12px;">
-
-                                    </p>
-
-                                    <p class="form-note">
-
-                                        Your details will be used only to respond to your enquiry.
-
-                                    </p>
-
+                                    <button class="btn gold" type="submit">Send Enquiry ↗</button>
+                                    <p class="form-note">Clicking send will open your email app (e.g., Gmail, Outlook) to send this directly to us.</p>
                                 </div>
 
                             </div>
-
                         </form>
+
+                        <!-- THE JAVASCRIPT THAT MAKES IT WORK -->
+                        <script>
+                            function sendEmail(event) {
+                                event.preventDefault(); // Prevents the page from reloading
+
+                                // 1. Get the values from the form
+                                const name = document.getElementById('name').value;
+                                const email = document.getElementById('email').value;
+                                const phone = document.getElementById('phone').value;
+                                const service = document.getElementById('service').value;
+                                const message = document.getElementById('message').value;
+
+                                // 2. Your destination email address
+                                const myEmail = "programerasu@gmail.com";
+
+                                // 3. Create the Subject Line
+                                const subject = encodeURIComponent("New Website Enquiry: " + service + " - from " + name);
+
+                                // 4. Create the Email Body format
+                                const body = encodeURIComponent(
+                                    "Hello CadlaB Team,\n\n" +
+                                    "A new enquiry has been submitted on the website.\n\n" +
+                                    "--- DETAILS ---\n" +
+                                    "Name: " + name + "\n" +
+                                    "Email: " + email + "\n" +
+                                    "Phone: " + phone + "\n" +
+                                    "Service: " + service + "\n\n" +
+                                    "--- PROJECT DETAILS ---\n" +
+                                    message + "\n\n" +
+                                    "---\n" +
+                                    "Sent from the CadlaB Website Form."
+                                );
+
+                                // 5. Open the user's email app with everything filled out
+                                window.location.href = "mailto:" + myEmail + "?subject=" + subject + "&body=" + body;
+
+                                // Optional: Show a success message on the screen
+                                document.getElementById('formMessage').innerText = "Opening your email app...";
+                            }
+                        </script>
 
                     </div>
 
